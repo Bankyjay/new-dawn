@@ -1,0 +1,16 @@
+configure_infrastructure: 
+  docker:
+    - image: python:3.7-alpine3.11
+  steps:
+    - checkout
+    - add_ssh_keys:
+            # You can get this ID in the section where you registered the SSH Key
+            fingerprints: ["9f:a4:3b:8b:36:0e:70:03:bc:49:fe:e8:cc:66:5d:80"] 
+    - run:
+        name: Install Ansible
+        command: |
+          apk add --update ansible
+    - run:
+        name: Run Playbook and Configure server
+        command: |
+          ansible-playbook -i inventory main-remote
